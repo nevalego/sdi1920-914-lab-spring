@@ -10,4 +10,5 @@ public class NotaneitorApplication {
 		SpringApplication.run(NotaneitorApplication.class, args);
 	}
 
+	
 }
