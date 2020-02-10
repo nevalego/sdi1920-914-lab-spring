@@ -14,6 +14,8 @@ import com.uniovi.services.ProfessorService;
 @Controller
 public class ProfessorController {
 
+	
+	
 	@Autowired
 	private ProfessorService professorService;
 	
