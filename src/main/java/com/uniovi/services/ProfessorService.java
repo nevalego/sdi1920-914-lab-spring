@@ -3,42 +3,35 @@ package com.uniovi.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.Professor;
+import com.uniovi.repositories.ProfessorRepository;
 
 @Service
 public class ProfessorService {
 
-	private List<Professor> professors = new ArrayList<Professor>();
+	@Autowired
+	private ProfessorRepository professorRepository;
 
 	public List<Professor> getProfessors() {
+		List<Professor> professors = new ArrayList<Professor>();
+		professorRepository.findAll().forEach(professors::add);
 		return professors;
 	}
 
 	public Professor getProfessor(Long id) {
-		for (Professor professor : professors) {
-			if (professor.getId() == id)
-				return professor;
-		}
-		return null;
+		return professorRepository.findById(id).get();
 	}
 
 	public void addProfessor(Professor professor) {
 		// Si en Id es null le asignamos el ultimo + 1 de la lista
-		if (professors.size() > 0) {
-			professor.setId(professors.get(professors.size() - 1).getId() + 1);
-		} else {
-			professor.setId(Long.valueOf(1));
-		}
-		professors.add(professor);
+		professorRepository.save(professor);
 	}
 
 	public void deleteProfessor(Long id) {
-		for (Professor professor : professors) {
-			if (professor.getId() == id)
-				professors.remove(professor);
-		}
+		professorRepository.deleteById(id);
 	}
 
 }

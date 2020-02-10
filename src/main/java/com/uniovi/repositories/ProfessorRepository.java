@@ -2,8 +2,8 @@ package com.uniovi.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.uniovi.entities.Mark;
+import com.uniovi.entities.Professor;
 
-public interface ProfessorRepository extends CrudRepository<Mark, Long>{
+public interface ProfessorRepository extends CrudRepository<Professor, Long>{
 
 }
