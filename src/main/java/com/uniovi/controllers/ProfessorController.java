@@ -38,7 +38,7 @@ public class ProfessorController {
 
 	@RequestMapping("/professor/details/{id}")
 	public String getDetail(Model model, @PathVariable Long id) {
-		model.addAttribute("profesor", professorService.getProfessor(id));
+		model.addAttribute("professor", professorService.getProfessor(id));
 		return "professor/details";
 	}
 
@@ -50,14 +50,14 @@ public class ProfessorController {
 
 	@RequestMapping(value = "/professor/edit/{id}")
 	public String getEdit(Model model, @PathVariable Long id) {
-		model.addAttribute("profesor", professorService.getProfessor(id));
+		model.addAttribute("professor", professorService.getProfessor(id));
 		return "professor/edit";
 	}
 
-	@RequestMapping(value = "/professor/edit/{id}", method = RequestMethod.POST)
-	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute Professor professor) {
-		professor.setId(id);
+	@RequestMapping(value = "/professor/edit/", method = RequestMethod.POST)
+	public String setEdit(Model model, @ModelAttribute Professor professor) {
+		professor.setId(professor.getId());
 		professorService.addProfessor(professor);
-		return "redirect:/professor/details/" + id;
+		return "redirect:/professor/details/" + professor.getId();
 	}
 }
