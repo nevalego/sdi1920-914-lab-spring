@@ -7,20 +7,20 @@
 
 	<div class="container" style="text-align: center">
 		<h2 th:text="#{welcome.message}"></h2>
-		<h3 th:text="#{welcome.secondTitle"></h3>
-		<p th:text="{#welcome.user}">
+		<h3 th:text="#{welcome.secondTitle}"></h3>
+		<p th:text="#{welcome.user}">
 			<b th:inline="text">
 				[[${#httpServletRequest.remoteUser}]] </b>
 		</p>
 
-		<p th:text="#{marks.list.title"></p>
+		<p th:text="#{marks.list.title}"></p>
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead>
 					<tr>
 						<th class="col-md-1">id</th>
-						<th th:text="#{marks.list.description"></th>
-						<th th:text="#marks.list.score"></th>
+						<th th:text="#{marks.list.description}"></th>
+						<th th:text="#{marks.list.score}"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
@@ -31,8 +31,8 @@
 						<td th:text="${mark.id}">1</td>
 						<td th:text="${mark.description}"></td>
 						<td th:text="${mark.score}"></td>
-						<td th:text="#{btn.details}><a th:href="${'/mark/details/' + mark.id}"></a></td>
-						<td th:text="#{btn.modify}><a th:href="${'/mark/edit/' + mark.id}"></a></td>
+						<td th:text="#{btn.details}"><a th:href="${'/mark/details/' + mark.id}"></a></td>
+						<td th:text="#{btn.modify}"><a th:href="${'/mark/edit/' + mark.id}"></a></td>
 						<td th:text="#{btn.delete}"><a th:href="${'/mark/delete/' + mark.id}"></a></td>
 					</tr>
 				</tbody>

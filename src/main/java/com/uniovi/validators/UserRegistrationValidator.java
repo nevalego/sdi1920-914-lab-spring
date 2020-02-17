@@ -10,7 +10,7 @@ import com.uniovi.entities.User;
 import com.uniovi.services.UsersService;
 
 @Component
-public class SignUpFormValidator implements Validator {
+public class UserRegistrationValidator implements Validator {
 
 	@Autowired
 	private UsersService usersService;
@@ -25,14 +25,17 @@ public class SignUpFormValidator implements Validator {
 		User user = (User) target;
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dni", "Error.empty");
 
-		if (user.getDni().length() < 5 || user.getDni().length() > 24) {
+		 char [] dnic=user.getDni().toCharArray();
+		if (user.getDni().length() < 9 || user.getDni().length() > 9) {
 			errors.rejectValue("dni", "Error.signup.dni.length");
 		}
-
+		if(   Character.isAlphabetic(dnic[8])) {
+			errors.rejectValue("dni", "Error.signup.dni.char");
+		}
 		if (usersService.getUserByDni(user.getDni()) != null) {
 			errors.rejectValue("dni", "Error.signup.dni.duplicate");
 		}
-		if (user.getName().length() < 2 || user.getName().length() >10) {
+		if (user.getName().length() < 5 || user.getName().length() >10) {
 			errors.rejectValue("name", "Error.signup.name.length");
 		}
 		if (user.getLastName().length() < 4 || user.getLastName().length() > 24) {
