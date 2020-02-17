@@ -32,14 +32,14 @@ public class SignUpFormValidator implements Validator {
 		if (usersService.getUserByDni(user.getDni()) != null) {
 			errors.rejectValue("dni", "Error.signup.dni.duplicate");
 		}
-		if (user.getName().length() < 5 || user.getName().length() > 24) {
+		if (user.getName().length() < 5 || user.getName().length() >10) {
 			errors.rejectValue("name", "Error.signup.name.length");
 		}
-		if (user.getLastName().length() < 5 || user.getLastName().length() > 24) {
+		if (user.getLastName().length() < 4 || user.getLastName().length() > 24) {
 			errors.rejectValue("lastName", "Error.signup.lastName.length");
 		}
 
-		if (user.getPassword().length() < 5 || user.getPassword().length() > 24) {
+		if (user.getPassword().length() < 3 || user.getPassword().length() > 24) {
 			errors.rejectValue("password", "Error.signup.password.length");
 		}
 
