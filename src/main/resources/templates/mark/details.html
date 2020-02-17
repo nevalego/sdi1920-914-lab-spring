@@ -7,21 +7,21 @@
 <nav th:replace="fragments/nav"/> 
 
 <div class="container">
-  <h2>Detalles de la nota</h2>      
+  <h2 th:text="#{mark.details}"></h2>      
   <div class="panel panel-default">
-	  <div class="panel-heading">DNI</div>
+	  <div th:text="#{users.dni}" class="panel-heading">DNI</div>
 	  <div class="panel-body" th:text="${mark.user.dni}" >
 		28276
 	  </div>
   </div>                                                                      
   <div class="panel panel-default">
-	  <div class="panel-heading">Descripción</div>
+	  <div th:text="#{marks.list.description}" class="panel-heading">Descripción</div>
 	  <div class="panel-body" th:text="${mark.description}" >
-		UO259000@uniovi.es
+		Ejemplo Ejer 1
 	  </div>
   </div>
   <div class="panel panel-default">
-	  <div class="panel-heading">Puntuación</div>
+	  <div th:text="#{marks.list.score}" class="panel-heading">Puntuación</div>
 	  <div class="panel-body" th:text="${mark.score}">
 		100
 	  </div>
