@@ -1,10 +1,5 @@
 package com.uniovi.controllers;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,11 +25,23 @@ public class MarksController {
 
 	@Autowired
 	private AddMarkValidator addMarkValidator;
-	
+
 	@RequestMapping("/mark/list")
 	public String getList(Model model) {
 		model.addAttribute("markList", marksService.getMarks());
 		return "mark/list";
+	}
+
+	@RequestMapping(value = "/mark/{id}/resend", method = RequestMethod.GET)
+	public String setResendTrue(Model model, @PathVariable Long id) {
+		marksService.setMarkResend(true, id);
+		return "redirect:/mark/list";
+	}
+
+	@RequestMapping(value = "/mark/{id}/noresend", method = RequestMethod.GET)
+	public String setResendFalse(Model model, @PathVariable Long id) {
+		marksService.setMarkResend(false, id);
+		return "redirect:/mark/list";
 	}
 
 	@RequestMapping("/mark/list/update")
@@ -52,7 +59,7 @@ public class MarksController {
 	@RequestMapping(value = "/mark/add", method = RequestMethod.POST)
 	public String setMark(@ModelAttribute Mark mark, BindingResult result) {
 		addMarkValidator.validate(mark, result);
-		if( result.hasErrors()) {
+		if (result.hasErrors()) {
 			return "mark/add";
 		}
 		marksService.addMark(mark);
@@ -80,7 +87,7 @@ public class MarksController {
 
 	@RequestMapping(value = "/mark/edit/{id}", method = RequestMethod.POST)
 	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute Mark mark) {
-		Mark original = marksService.getMark(id); 
+		Mark original = marksService.getMark(id);
 		// modificar solo score y description
 		original.setScore(mark.getScore());
 		original.setDescription(mark.getDescription());

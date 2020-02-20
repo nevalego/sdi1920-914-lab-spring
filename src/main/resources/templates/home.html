@@ -9,18 +9,28 @@
 		<h2 th:text="#{welcome.message}"></h2>
 		<h3 th:text="#{welcome.secondTitle}"></h3>
 		<p th:text="#{welcome.user}">
-			<b th:inline="text">
-				[[${#httpServletRequest.remoteUser}]] </b>
+		Usuario Autenticado como : 
+			<span sec:authentication="principal.username" th:inline="text" />
 		</p>
 
-		<p th:text="#{marks.list.title}"></p>
+	<h2 th:text="#{marks.list.title}">Notas</h2>
+	<p th:text="#{marks.list.p}">Las notas que actualmente figuran en
+			el sistema son las siguientes:</p>
+		<button th:text="#{btn.update}" type="button" id="updateButton"
+			class="btn btn-default">Actualizar</button>
+		<script>
+			$("#updateButton").click(function() {
+				$("#tableMarks").load('/mark/list/update');
+			});
+		</script>
 		<div class="table-responsive">
-			<table class="table table-hover">
+			<table class="table table-hover" th:fragment="tableMarks"
+				id="tableMarks">
 				<thead>
 					<tr>
 						<th class="col-md-1">id</th>
-						<th th:text="#{marks.list.description}"></th>
-						<th th:text="#{marks.list.score}"></th>
+						<th th:text="#{marks.list.description}">Descripción</th>
+						<th th:text="#{marks.list.score}">Puntuación</th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
@@ -29,19 +39,28 @@
 				<tbody>
 					<tr th:each="mark : ${markList}">
 						<td th:text="${mark.id}">1</td>
-						<td th:text="${mark.description}"></td>
-						<td th:text="${mark.score}"></td>
-						<td th:text="#{btn.details}"><a th:href="${'/mark/details/' + mark.id}"></a></td>
-						<td th:text="#{btn.modify}"><a th:href="${'/mark/edit/' + mark.id}"></a></td>
-						<td th:text="#{btn.delete}"><a th:href="${'/mark/delete/' + mark.id}"></a></td>
+						<td th:text="${mark.description}">Ejercicio 1</td>
+						<td th:text="${mark.score}">10</td>
+						<td><a th:text="#{btn.details}"
+							th:href="${'/mark/details/' + mark.id}"></a></td>
+						<td><a sec:authorize="hasRole('ROLE_PROFESSOR')"
+							th:text="#{btn.modify}" th:href="${'/mark/edit/' + mark.id}"></a>
+
+							<div sec:authorize="hasRole('ROLE_STUDENT')" >
+								<div th:if="${mark.resend}">
+									<a th:href="${'/mark/' + mark.id + '/noresend'}">Reenviar</a>
+								</div>
+								<div th:unless="${mark.resend}">
+									<a th:href="${'/mark/' + mark.id + '/resend'}">No reenviar</a>
+								</div>
+							</div>
+						</td>
+						<td><a sec:authorize="hasRole('ROLE_PROFESSOR')"
+							th:text="#{btn.delete}" th:href="${'/mark/delete/' + mark.id}"></a></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-
-	</div>
-
-	<footer th:replace="fragments/footer" />
-
+	<footer th:replace="fragments/footer"/>
 </body>
 </html>
