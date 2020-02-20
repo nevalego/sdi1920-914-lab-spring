@@ -1,7 +1,11 @@
 package com.uniovi.services;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +18,7 @@ public class MarksService {
 
 	@Autowired
 	private MarksRepository marksRepository;
-
+	
 	public List<Mark> getMarks() {
 		List<Mark> marks = new ArrayList<Mark>();
 		marksRepository.findAll().forEach(marks::add);
@@ -22,7 +26,8 @@ public class MarksService {
 	}
 
 	public Mark getMark(Long id) {
-		return marksRepository.findById(id).get();
+		Mark obtainedmark = marksRepository.findById(id).get();
+		return obtainedmark;
 	}
 
 	public void addMark(Mark mark) {
