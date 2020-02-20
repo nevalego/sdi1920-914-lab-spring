@@ -31,6 +31,24 @@
 						<li><a th:text="#{btn.seeUsers}" href="/user/list"></a></li>
 					</ul>
 				</li>
+				<li id="users-menu" class="dropdown">
+					<a  class="dropdown-toggle" data-toggle="dropdown"
+						href="#"> <span th:text="#{manage.professors}">Gestión de Profesores</span><span class="caret"></span> 
+					</a>
+					<ul class="dropdown-menu">
+						<li><a th:text="#{btn.addProfessor}" href="/professor/add"></a></li>
+						<li><a th:text="#{btn.seeProfessors}" href="/professor/list"></a></li>
+					</ul>
+				</li>
+				<li id="users-menu" class="dropdown">
+					<a  class="dropdown-toggle" data-toggle="dropdown"
+						href="#"> <span th:text="#{manage.departments}">Gestión de Departamentos</span><span class="caret"></span> 
+					</a>
+					<ul class="dropdown-menu">
+						<li><a th:text="#{btn.addDepartment}" href="/department/add"></a></li>
+						<li><a th:text="#{btn.seeDepartments}" href="/department/list"></a></li>
+					</ul>
+				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a id="btnLanguage"
@@ -51,9 +69,7 @@
 								style="border: 0; float: left; margin-right: 15px" /> <span
 								th:text="#{language.es}">Español</span>
 						</a></li>
-						<li><a id="btnFrench" value="FR"> <img
-								th:src="@{/img/if_france_flag.png}"
-								style="border: 0; float: left; margin-right: 15px" /> <span
+						<li><a id="btnFrench" value="FR"> <span
 								th:text="#{language.fr}">Francés</span>
 						</a></li>
 					</ul></li>

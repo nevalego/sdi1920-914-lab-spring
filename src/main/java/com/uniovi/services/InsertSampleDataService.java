@@ -2,16 +2,26 @@ package com.uniovi.services;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.uniovi.entities.Department;
 import com.uniovi.entities.Mark;
+import com.uniovi.entities.Professor;
 import com.uniovi.entities.User;
 
 @Service
 public class InsertSampleDataService {
 	@Autowired
 	private UsersService usersService;
+	@Autowired
+	private DepartmentService departmentService;
+	@Autowired
+	private ProfessorService professorService;
+	
 
 	@PostConstruct
 	public void init() {
@@ -73,5 +83,23 @@ public class InsertSampleDataService {
 		usersService.addUser(user4);
 		usersService.addUser(user5);
 		usersService.addUser(user6);
+		
+		
+		Department dep1 = new Department("Informática");
+		Department dep2 = new Department("Física");
+		Department dep3 = new Department("Álgebra");
+		
+		departmentService.addDepartment(dep1);
+		departmentService.addDepartment(dep2);
+		departmentService.addDepartment(dep3);
+		
+		Professor prof1 = new Professor("88888888E", "Juan","Manuel Montoya", "01", dep1);
+		Professor prof2 = new Professor("66666666I", "Jairo","Perez Ruiz", "21", dep2);
+		Professor prof3 = new Professor("22222222C", "Lana","Prado Losa", "11", dep3);
+		
+		
+		professorService.addProfessor(prof1);
+		professorService.addProfessor(prof2);
+		professorService.addProfessor(prof3);
 	}
 }

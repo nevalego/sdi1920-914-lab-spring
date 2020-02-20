@@ -7,7 +7,6 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.uniovi.entities.Mark;
-import com.uniovi.entities.User;
 import com.uniovi.services.MarksService;
 
 @Component
@@ -18,7 +17,7 @@ public class AddMarkValidator implements Validator {
 
 	@Override
 	public boolean supports(Class<?> aClass) {
-		return User.class.equals(aClass);
+		return Mark.class.equals(aClass);
 	}
 
 	@Override
