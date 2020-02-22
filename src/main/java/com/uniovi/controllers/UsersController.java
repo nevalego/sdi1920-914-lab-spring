@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.uniovi.entities.User;
+import com.uniovi.services.MarksService;
 import com.uniovi.services.RolesService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
@@ -25,6 +26,9 @@ public class UsersController {
 
 	@Autowired
 	private SecurityService securityService;
+	
+	@Autowired
+	private MarksService marksService;
 	
 	@Autowired
 	private SignUpFormValidator signUpFormValidator;
@@ -59,8 +63,8 @@ public class UsersController {
 	public String home(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String dni = auth.getName();
-		User activeUser = usersService.getUserByDni(dni);
-		model.addAttribute("markList", activeUser.getMarks());
+		User user = usersService.getUserByDni(dni);
+		model.addAttribute("markList", marksService.getMarksForUser(user));
 		return "home";
 	}
 

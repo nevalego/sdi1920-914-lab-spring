@@ -10,7 +10,7 @@
 		<h3 th:text="#{welcome.secondTitle}"></h3>
 		<p th:text="#{welcome.user}">
 		Usuario Autenticado como : 
-			<span sec:authentication="principal.username" th:inline="text" />
+			<span sec:authentication="principal.name" th:inline="text" />
 		</p>
 
 	<h2 th:text="#{marks.list.title}">Notas</h2>

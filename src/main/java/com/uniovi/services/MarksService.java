@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.Mark;
+import com.uniovi.entities.User;
 import com.uniovi.repositories.MarksRepository;
 
 @Service
@@ -26,6 +27,17 @@ public class MarksService {
 	public Mark getMark(Long id) {
 		Mark obtainedmark = marksRepository.findById(id).get();
 		return obtainedmark;
+	}
+	
+	public List<Mark> getMarksForUser(User user){
+		List<Mark> marks = new ArrayList<Mark>();
+		if( user.getRole().equals("ROLE_STUDENT")) {
+			marks = marksRepository.findAllByUser(user);
+		}
+		if( user.getRole().equals("ROLE_PROFESSOR")) {
+			marks = getMarks();
+		}
+		return marks;
 	}
 
 	public void setMarkResend(boolean revised, Long id) {
