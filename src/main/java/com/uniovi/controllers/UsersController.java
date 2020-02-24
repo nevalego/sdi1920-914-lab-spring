@@ -75,9 +75,13 @@ public class UsersController {
 	}
 
 	@RequestMapping("/user/list")
-	public String getListado(Model model, Pageable pageable) {
+	public String getListado(Model model, Pageable pageable, String searchText) {
 		Page<User> users = new PageImpl<User>(new LinkedList<User>());
-		users =  usersService.getUsers(pageable);
+		if (searchText != null && !searchText.isEmpty()) {
+			users = usersService.searchMarksByDescriptionAndNameForUser(pageable,searchText);
+		} else {
+			users = usersService.getUsers(pageable);
+		}
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
 		
