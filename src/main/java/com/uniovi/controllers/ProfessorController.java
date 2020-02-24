@@ -1,6 +1,11 @@
 package com.uniovi.controllers;
 
+import java.util.LinkedList;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.uniovi.entities.Mark;
 import com.uniovi.entities.Professor;
 import com.uniovi.services.DepartmentService;
 import com.uniovi.services.ProfessorService;
@@ -27,8 +33,12 @@ public class ProfessorController {
 	private AddProfessorValidator addProfessorValidator;
 	
 	@RequestMapping("/professor/list")
-	public String getList(Model model) {
-		model.addAttribute("professorList", professorService.getProfessors());
+	public String getList(Model model, Pageable pageable) {
+		Page<Professor> professors = new PageImpl<Professor>(new LinkedList<Professor>());
+		professors = professorService.getProfessors(pageable);
+		model.addAttribute("professorList", professors.getContent());
+		model.addAttribute("page", professors);
+		
 		return "/professor/list";
 	}
 
@@ -68,7 +78,8 @@ public class ProfessorController {
 	}
 
 	@RequestMapping(value = "/professor/edit/", method = RequestMethod.POST)
-	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute Professor professor) {
+	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute Professor professor
+			) {
 		Professor original = professorService.getProfessor(id); 
 		// modificar solo dni, nombre, apellidos y categoria
 		original.setDni(professor.getDni());
@@ -79,3 +90,4 @@ public class ProfessorController {
 		return "redirect:/professor/details/" + id;
 	}
 }
+

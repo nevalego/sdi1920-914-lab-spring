@@ -1,10 +1,13 @@
 package com.uniovi.services;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.uniovi.entities.Professor;
 import com.uniovi.repositories.ProfessorRepository;
@@ -15,9 +18,9 @@ public class ProfessorService {
 	@Autowired
 	private ProfessorRepository professorRepository;
 
-	public List<Professor> getProfessors() {
-		List<Professor> professors = new ArrayList<Professor>();
-		professorRepository.findAll().forEach(professors::add);
+	public Page<Professor> getProfessors(Pageable pageable) {
+		Page<Professor> professors =new PageImpl<Professor>(new LinkedList<Professor>());
+		professors = professorRepository.findAll(pageable);
 		return professors;
 	}
 
