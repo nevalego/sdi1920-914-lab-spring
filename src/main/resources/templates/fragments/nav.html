@@ -38,7 +38,7 @@
 						href="#"> <span th:text="#{manage.professors}">Gestión de Profesores</span><span class="caret"></span> 
 					</a>
 					<ul class="dropdown-menu">
-						<li><a th:text="#{btn.addProfessor}" href="/professor/add"></a></li>
+						<li><a th:text="#{btn.addProfessor}" sec:authorize="hasRole('ROLE_ADMIN')" href="/professor/add"></a></li>
 						<li><a th:text="#{btn.seeProfessors}" href="/professor/list"></a></li>
 					</ul>
 				</li>

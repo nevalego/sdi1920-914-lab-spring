@@ -31,8 +31,10 @@
 						<td th:text="${professor.apellidos}"></td>
 						<td th:text="${professor.categoria}"></td>
 						<td><a th:href="${'/professor/details/' + professor.id}">detalles</a></td>
-						<td><a th:href="${'/professor/edit/' + professor.id}">modificar</a></td>
-						<td><a th:href="${'/professor/delete/' + professor.id}">eliminar</a></td>
+						<td><a sec:authorize="hasRole('ROLE_ADMIN')"
+							th:href="${'/professor/edit/' + professor.id}">modificar</a></td>
+						<td><a sec:authorize="hasRole('ROLE_ADMIN')"
+							th:text="#{btn.delete}" th:href="${'/professor/delete/' + professor.id}">eliminar</a></td>
 					</tr>
 				</tbody>
 			</table>
