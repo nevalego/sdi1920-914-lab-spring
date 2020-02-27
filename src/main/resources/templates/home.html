@@ -9,11 +9,14 @@
 		<h2 th:text="#{welcome.message}"></h2>
 		<h3 th:text="#{welcome.secondTitle}"></h3>
 		<p th:text="#{welcome.user}">
-		Usuario Autenticado como : 
-			<span sec:authentication="principal.name" th:inline="text" />
+			Usuario Autenticado como : <span sec:authentication="principal.name"
+				th:inline="text" />
 		</p>
+		<div class="table-responsive">
+			<table class="table table-hover" th:replace="fragments/marks"
+				id="tableMarks">
+			</table>
+		</div>
 	</div>
-	<footer th:replace="fragments/footer" />
-
-</body>
+	<footer th:replace="fragments/footer" /></body>
 </html>

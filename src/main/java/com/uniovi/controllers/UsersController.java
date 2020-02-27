@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.uniovi.entities.Mark;
 import com.uniovi.entities.Professor;
 import com.uniovi.entities.User;
 import com.uniovi.services.MarksService;
@@ -65,12 +66,26 @@ public class UsersController {
 		return "login";
 	}
 
+//	@RequestMapping(value = "/login", method = RequestMethod.POST)
+//	public String login(Model model, Pageable pageable) {
+//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//		String dni = auth.getName();
+//		User user = usersService.getUserByDni(dni);
+//		Page<Mark> marks = new PageImpl<Mark>(new LinkedList<Mark>());
+//		marks = marksService.getMarksForUser(user, pageable);
+//		model.addAttribute("markList", marks.getContent());
+//		model.addAttribute("page", pageable );
+//		return "redirect:home";
+//	}
+
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
-	public String home(Model model, Pageable pageable) {
+	public String home(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String dni = auth.getName();
 		User user = usersService.getUserByDni(dni);
-		model.addAttribute("markList", marksService.getMarksForUser(pageable, user));
+		Iterable<Mark> marks = new PageImpl<Mark>(new LinkedList<Mark>());
+		marks = marksService.getMarksForUser(user);
+		model.addAttribute("markList", marks);
 		return "home";
 	}
 

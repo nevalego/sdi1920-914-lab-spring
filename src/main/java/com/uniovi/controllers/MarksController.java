@@ -45,7 +45,7 @@ public class MarksController {
 		if (searchText != null && !searchText.isEmpty()) {
 			marks = marksService.searchMarksByDescriptionAndNameForUser(pageable,searchText, user);
 		} else {
-			marks = marksService.getMarksForUser(pageable,user);
+			marks = marksService.getMarksForUser(user,pageable);
 		}
 		model.addAttribute("markList", marks.getContent());
 		model.addAttribute("page", marks);
@@ -68,7 +68,7 @@ public class MarksController {
 	public String updateList(Model model, Pageable pageable, Principal principal) {
 		String dni = principal.getName(); // DNI es el name de la autenticación
 		User user = usersService.getUserByDni(dni);
-		Page<Mark> marks = marksService.getMarksForUser(pageable,user);
+		Page<Mark> marks = marksService.getMarksForUser(user,pageable);
 		model.addAttribute("markList", marks.getContent());
 		return "mark/list :: tableMarks";
 	}

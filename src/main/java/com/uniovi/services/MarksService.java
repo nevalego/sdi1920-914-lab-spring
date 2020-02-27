@@ -1,6 +1,5 @@
 package com.uniovi.services;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -44,7 +43,7 @@ public class MarksService {
 		return marks;
 	}
 
-	public Page<Mark> getMarksForUser(Pageable pageable, User user) {
+	public Page<Mark> getMarksForUser(User user, Pageable pageable) {
 		Page<Mark> marks = new PageImpl<Mark>(new LinkedList<Mark>());
 		if (user.getRole().equals("ROLE_STUDENT")) {
 			marks = marksRepository.findAllByUser(pageable, user);
@@ -71,5 +70,9 @@ public class MarksService {
 
 	public void deleteMark(Long id) {
 		marksRepository.deleteById(id);
+	}
+
+	public Iterable<Mark> getMarksForUser(User user) {
+		return marksRepository.findAll();
 	}
 }
