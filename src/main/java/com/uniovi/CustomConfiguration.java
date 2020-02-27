@@ -1,5 +1,9 @@
 package com.uniovi;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.List;
 import java.util.Locale;
 
@@ -19,11 +23,34 @@ public class CustomConfiguration implements WebMvcConfigurer {
 
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-		int page = 0;
-		int size = 3;
+		int [] values = readPageAndSizeFile("src/main/resources/pageConfiguration.txt");
 		PageableHandlerMethodArgumentResolver resolver = new PageableHandlerMethodArgumentResolver();
-		resolver.setFallbackPageable(PageRequest.of(page, size));
+		resolver.setFallbackPageable(PageRequest.of(values[0], values[1]));
 		argumentResolvers.add(resolver);
+	}
+
+	private int[] readPageAndSizeFile(String string) {
+		int [] values = new int [2];
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new FileReader(string));
+			while(br.ready()) {
+				String  [] line = br.readLine().split("\t");
+				values[0]=  Integer.valueOf(line[0]);
+				values[1] = Integer.valueOf(line[1]);
+			}
+		}catch( IOException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				br.close();
+				return values;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return values;
+		
 	}
 
 	@Bean
