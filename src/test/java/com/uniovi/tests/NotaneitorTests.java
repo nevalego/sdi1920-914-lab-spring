@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.uniovi.tests.pageobjects.PO_HomeView;
+import com.uniovi.tests.pageobjects.PO_LoginView;
 import com.uniovi.tests.pageobjects.PO_Properties;
 import com.uniovi.tests.pageobjects.PO_RegisterView;
 import com.uniovi.tests.pageobjects.PO_View;
@@ -116,6 +117,65 @@ public class NotaneitorTests {
 		// Rellenamos el formulario.
 		PO_RegisterView.fillForm(driver, "99999990B", "Josefo", "Per", "77777", "77777");
 
+	}
+
+	// PR07: Identificación válida con usuario de ROL usuario
+	@Test
+	public void PR07() {
+		// Vamos al formulario de identificación
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "99999990A", "123456");
+		// Comprobamos que entramos en la sección privada con ROL usuario
+		PO_View.checkElement(driver, "text", "Notas del usuario");
+	}
+
+	// PR08: Identificación válida con usuario de ROL profesor
+	@Test
+	public void PR08() {
+		// Vamos al formulario de identificación
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, " 99999993D", "123456");
+		// Comprobamos que entramos en la sección privada con ROL usuario
+		PO_View.checkElement(driver, "text", "Notas del profesor");
+	}
+
+	// PR09: Identificación válida con usuario de ROL administrador
+	@Test
+	public void PR09() {
+		// Vamos al formulario de identificación
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, " 99999988F", "123456");
+		// Comprobamos que entramos en la sección privada con ROL administrador
+		PO_View.checkElement(driver, "text", "Notas");
+	}
+
+	// PR10: Identificación válida con usuario de ROL alumno
+	@Test
+	public void PR10() {
+		// Vamos al formulario de identificación
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, " 99999990A", "123456");
+		// Comprobamos que entramos en la sección privada con ROL alumno
+		PO_View.checkElement(driver, "text", "Notas del alumno");
+	}
+
+	// PR11: Identificación válida y desconexión con usuario de ROL usuario
+	@Test
+	public void PR11() {
+		// Vamos al formulario de identificación
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, " 99999990A", "123456");
+		// Comprobamos que entramos en la sección privada con ROL usuario
+		PO_View.checkElement(driver, "text", "Notas");
+		// Vamos al desconectarnos
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+		// Comprobamos que estamos desconectados
+		PO_View.checkElement(driver, "text", "Identificate");
 	}
 
 	// Al finalizar la última prueba
