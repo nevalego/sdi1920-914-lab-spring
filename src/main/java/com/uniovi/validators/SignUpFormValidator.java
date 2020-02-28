@@ -25,7 +25,7 @@ public class SignUpFormValidator implements Validator {
 		User user = (User) target;
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dni", "Error.empty");
 
-		if (user.getDni().length() < 5 || user.getDni().length() > 24) {
+		if (user.getDni().length() < 9 || user.getDni().length() > 9) {
 			errors.rejectValue("dni", "Error.signup.dni.length");
 		}
 
