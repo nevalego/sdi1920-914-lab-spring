@@ -21,6 +21,7 @@ import com.uniovi.tests.pageobjects.PO_PrivateView;
 import com.uniovi.tests.pageobjects.PO_Properties;
 import com.uniovi.tests.pageobjects.PO_RegisterView;
 import com.uniovi.tests.pageobjects.PO_View;
+import com.uniovi.tests.util.SeleniumUtils;
 
 // Ordenamos las pruebas por el nombre del método
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -134,6 +135,7 @@ public class NotaneitorComplementariosTests {
 		PO_View.checkElement(driver, "text", "Notas del usuario");
 
 		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'professors-menu')]/a");
+		elementos.get(0).click();
 		assertTrue(elementos.size() == 2);
 		// Ahora nos desconectamos
 		PO_PrivateView.clickOption(driver, "/logout", "text", "Identifícate");
@@ -146,6 +148,7 @@ public class NotaneitorComplementariosTests {
 		PO_View.checkElement(driver, "text", "Notas del usuario");
 
 		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'professors-menu')]/a");
+		elementos.get(0).click();
 		assertTrue(elementos.size() == 1);
 		// Ahora nos desconectamos
 		PO_PrivateView.clickOption(driver, "/logout", "text", "Identifícate");
@@ -158,10 +161,36 @@ public class NotaneitorComplementariosTests {
 		PO_View.checkElement(driver, "text", "Notas del usuario");
 
 		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'professors-menu')]/a");
+		elementos.get(0).click();
 		assertTrue(elementos.size() == 1);
 		// Ahora nos desconectamos
 		PO_PrivateView.clickOption(driver, "/logout", "text", "Identifícate");
 
+	}
+
+	// Prueba4 Ejercicio3 -> Listado de profesores
+	@Test
+	public void Prueba4() {
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "/login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "99999988F", "123456");
+		// COmprobamos que entramos en la pagina privada del administrador
+		PO_View.checkElement(driver, "text", "Notas del usuario");
+
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'professors-menu')]/a");
+		elementos.get(0).click();
+		// Pinchamos en la opción de listar profesores
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/professor/list')]");
+		elementos.get(0).click();
+		
+		int size=0;
+		for(WebElement elem : elementos) {
+			List<WebElement> elems = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
+					PO_View.getTimeout());
+			size += elems.size();
+		}
+		assertTrue(size == 4);
 	}
 
 	// Al finalizar la última prueba
